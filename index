@@ -1,0 +1,23 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>My Study Planner</h1>
+        <div class="input-group">
+            <input type="text" id="subjectInput" placeholder="Enter subject">
+            <button id="addBtn">Add</button>
+        </div>
+        <ul id="subjectList"></ul>
+        <div class="timer">
+            <div id="timeDisplay">25:00</div>
+            <button id="timerBtn">Start Timer</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
