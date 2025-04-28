@@ -1,0 +1,58 @@
+// app.js
+document.addEventListener('DOMContentLoaded', () => {
+    const subjectInput = document.getElementById('subjectInput');
+    const addBtn = document.getElementById('addBtn');
+    const subjectList = document.getElementById('subjectList');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const timerBtn = document.getElementById('timerBtn');
+    
+    let subjects = JSON.parse(localStorage.getItem('subjects')) || [];
+    
+    function renderSubjects() {
+        subjectList.innerHTML = '';
+        subjects.forEach((subject, index) => {
+            const li = document.createElement('li');
+            li.textContent = subject;
+            subjectList.appendChild(li);
+        });
+    }
+    
+    addBtn.addEventListener('click', () => {
+        if (subjectInput.value.trim()) {
+            subjects.push(subjectInput.value.trim());
+            localStorage.setItem('subjects', JSON.stringify(subjects));
+            subjectInput.value = '';
+            renderSubjects();
+        }
+    });
+    
+    // Timer functionality
+    let secondsLeft = 1500; // 25 minutes
+    let timerInterval;
+    
+    function updateTimer() {
+        const minutes = Math.floor(secondsLeft / 60);
+        const seconds = secondsLeft % 60;
+        timeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval);
+            alert('Study session complete!');
+        } else {
+            secondsLeft--;
+        }
+    }
+    
+    timerBtn.addEventListener('click', () => {
+        if (timerBtn.textContent === 'Start Timer') {
+            secondsLeft = 1500;
+            timerInterval = setInterval(updateTimer, 1000);
+            timerBtn.textContent = 'Pause';
+        } else {
+            clearInterval(timerInterval);
+            timerBtn.textContent = 'Start Timer';
+        }
+    });
+    
+    renderSubjects();
+});
